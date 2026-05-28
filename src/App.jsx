@@ -3,10 +3,8 @@ import MusicPlayer from "./components/MusicPlayer.jsx";
 import CanvasView from "./components/CanvasView.jsx";
 import InterpretationPanel from "./components/InterpretationPanel.jsx";
 import UploadInput from "./components/UploadInput.jsx";
-import { generateInterpretation } from "./lib/interpretationEngine.js";
 import UrlInput from "./components/UrlInput.jsx";
-
-
+import { generateInterpretation } from "./lib/interpretationEngine.js";
 
 const DEMO_TRACK = {
   title: "How Are You — Mvmuro",
@@ -75,13 +73,20 @@ export default function App() {
 
       <main className="app-main">
         <section className="app-left">
+
+          {/* URL INPUT — placed ABOVE MusicPlayer exactly as you requested */}
+          <UrlInput onUrlSelected={handleFileSelected} />
+
+          {/* FILE UPLOAD */}
           <UploadInput onFileSelected={handleFileSelected} />
 
+          {/* MUSIC PLAYER */}
           <MusicPlayer
             track={currentTrack}
             onPlaybackChange={handlePlaybackChange}
           />
 
+          {/* INTERPRETATION */}
           <InterpretationPanel
             interpretation={interpretation}
             track={currentTrack}
