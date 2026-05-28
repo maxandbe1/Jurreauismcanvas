@@ -1,39 +1,50 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 export default function UrlInput({ onUrlSelected }) {
-  const [url, setUrl] = useState("");
-  const AUDIO_PROXY_BASE = 
-
-
+  const [input, setInput] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!url.trim()) return;
-
-    onUrlSelected({
-      title: url,
-      src: url,
-      meta: {
-        tempo: 90,
-        energy: 0.5,
-        mood: "unknown",
-        key: "unknown"
-      }
-    });
-
-    setUrl("");
+    if (!input.trim()) return;
+    onUrlSelected(input.trim());
   };
 
   return (
-    <form onSubmit={handleSubmit} className="url-input-box">
+    <form
+      onSubmit={handleSubmit}
+      style={{
+        display: "flex",
+        gap: "10px",
+        width: "100%",
+        marginBottom: "20px",
+      }}
+    >
       <input
         type="text"
-        placeholder="Paste MP3 URL"
-        value={url}
-        onChange={(e) => setUrl(e.target.value)}
-        className="url-input-field"
+        placeholder="Enter audio URL"
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+        style={{
+          flex: 1,
+          padding: "10px",
+          borderRadius: "8px",
+          border: "1px solid #333",
+          background: "#000",
+          color: "#fff",
+        }}
       />
-      <button type="submit" className="btn-primary">
+
+      <button
+        type="submit"
+        style={{
+          padding: "10px 16px",
+          background: "#444",
+          border: "none",
+          borderRadius: "8px",
+          color: "#fff",
+          cursor: "pointer",
+        }}
+      >
         Load
       </button>
     </form>
