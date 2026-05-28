@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 export default function UrlInput({ onUrlSelected }) {
   const [url, setUrl] = useState("");
-  const AUDIO_PROXY_BASE = "https://audio-proxy.maxandbe1.workers.dev/;
+  const AUDIO_PROXY_BASE = 
 
 
 
