@@ -4,6 +4,9 @@ import CanvasView from "./components/CanvasView.jsx";
 import InterpretationPanel from "./components/InterpretationPanel.jsx";
 import UploadInput from "./components/UploadInput.jsx";
 import { generateInterpretation } from "./lib/interpretationEngine.js";
+import UrlInput from "./components/UrlInput.jsx";
+
+
 
 const DEMO_TRACK = {
   title: "How Are You — Mvmuro",
