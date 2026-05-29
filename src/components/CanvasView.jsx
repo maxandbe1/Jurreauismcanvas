@@ -1,44 +1,56 @@
-import React, { useRef, useEffect } from "react";
+import { useEffect, useRef } from "react";
 
-export default function CanvasView({ playbackState }) {
+export default function CanvasView({ audioState }) {
   const canvasRef = useRef(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
+    if (!canvas) return;
     const ctx = canvas.getContext("2d");
+    if (!ctx) return;
 
-    const render = () => {
-      const { width, height } = canvas;
-      const t = playbackState.progress || 0;
-      const pulse = 0.5 + 0.5 * Math.sin(t * 1.2);
+    const { current, duration, isPlaying } = audioState || {};
 
-      const left = `rgba(60, 90, 200, ${0.4 + pulse * 0.4})`;
-      const right = `rgba(230, 120, 180, ${0.4 + pulse * 0.4})`;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      const gradient = ctx.createLinearGradient(0, 0, width, height);
-      gradient.addColorStop(0, left);
-      gradient.addColorStop(0.5, "rgba(255,255,255,0.3)");
-      gradient.addColorStop(1, right);
+    ctx.fillStyle = "#050505";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      ctx.fillStyle = gradient;
-      ctx.fillRect(0, 0, width, height);
+    const progress = duration ? current / duration : 0;
 
-      requestAnimationFrame(render);
-    };
+    const barWidth = canvas.width * 0.8;
+    const barHeight = 6;
+    const x = (canvas.width - barWidth) / 2;
+    const y = canvas.height / 2 - barHeight / 2;
 
-    const resize = () => {
-      const rect = canvas.getBoundingClientRect();
-      canvas.width = rect.width * window.devicePixelRatio;
-      canvas.height = rect.height * window.devicePixelRatio;
-      ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
-    };
+    ctx.fillStyle = "#222";
+    ctx.fillRect(x, y, barWidth, barHeight);
 
-    resize();
-    render();
+    ctx.fillStyle = isPlaying ? "#4ade80" : "#888";
+    ctx.fillRect(x, y, barWidth * progress, barHeight);
 
-    window.addEventListener("resize", resize);
-    return () => window.removeEventListener("resize", resize);
-  }, [playbackState]);
+    ctx.fillStyle = "#fff";
+    ctx.globalAlpha = 0.6;
+    ctx.font = "10px Inter, system-ui, sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText(
+      isPlaying ? "Streaming…" : "Idle",
+      canvas.width / 2,
+      y - 10
+    );
+    ctx.globalAlpha = 1;
+  }, [audioState]);
 
-  return <canvas ref={canvasRef} className="canvas-surface" />;
+  return (
+    <canvas
+      ref={canvasRef}
+      width={480}
+      height={120}
+      style={{
+        background: "#000",
+        borderRadius: 12,
+        border: "1px solid #222",
+      }}
+    />
+  );
 }
