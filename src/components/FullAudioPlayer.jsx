@@ -11,6 +11,7 @@ export default function FullAudioPlayer({ audioUrl, setAudioUrl }) {
 
   const loadAudio = () => {
     if (!audioUrl) return;
+
     setError("");
     setLoading(true);
     setIsPlaying(false);
@@ -50,13 +51,20 @@ export default function FullAudioPlayer({ audioUrl, setAudioUrl }) {
 
   return (
     <div style={styles.container}>
-      <h2 style={styles.title}>Portal Audio Player</h2>
+      {/* Portal‑OS Module Header */}
+      <div style={styles.header}>
+        <div style={styles.dot} />
+        <div style={styles.dot} />
+        <div style={styles.dot} />
+        <div style={styles.label}>Audio Module</div>
+      </div>
 
       {/* Load Button */}
       <button style={styles.loadBtn} onClick={loadAudio}>
-        Load Audio
+        Load
       </button>
 
+      {/* Audio Element */}
       <audio
         ref={audioRef}
         onLoadedMetadata={() => {
@@ -71,9 +79,11 @@ export default function FullAudioPlayer({ audioUrl, setAudioUrl }) {
         onEnded={() => setIsPlaying(false)}
       />
 
+      {/* Status */}
       {loading && <div style={styles.status}>Loading…</div>}
       {error && <div style={styles.error}>{error}</div>}
 
+      {/* Controls */}
       {!loading && !error && duration > 0 && (
         <>
           <div style={styles.controls}>
@@ -104,18 +114,34 @@ const styles = {
   container: {
     width: "100%",
     maxWidth: 480,
-    margin: "40px auto",
     padding: 20,
     background: "#111",
     color: "#fff",
     borderRadius: 12,
     fontFamily: "Inter, sans-serif",
   },
-  title: {
+
+  header: {
+    display: "flex",
+    alignItems: "center",
+    gap: 8,
     marginBottom: 20,
-    fontSize: 22,
-    fontWeight: 600,
   },
+
+  dot: {
+    width: 10,
+    height: 10,
+    borderRadius: "50%",
+    background: "#333",
+  },
+
+  label: {
+    marginLeft: 10,
+    fontSize: 14,
+    opacity: 0.7,
+    letterSpacing: 0.5,
+  },
+
   loadBtn: {
     padding: "10px 16px",
     background: "#444",
@@ -125,12 +151,14 @@ const styles = {
     cursor: "pointer",
     marginBottom: 20,
   },
+
   controls: {
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
     marginTop: 10,
   },
+
   playBtn: {
     padding: "8px 16px",
     background: "#fff",
@@ -139,18 +167,22 @@ const styles = {
     border: "none",
     cursor: "pointer",
   },
+
   time: {
     fontSize: 14,
     opacity: 0.8,
   },
+
   seek: {
     width: "100%",
     marginTop: 12,
   },
+
   status: {
     marginTop: 10,
     color: "#aaa",
   },
+
   error: {
     marginTop: 10,
     color: "#ff5555",
