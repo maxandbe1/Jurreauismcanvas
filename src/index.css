@@ -1,10 +1,53 @@
+/* Global Reset */
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
+/* Full‑screen black background */
 body {
-  margin: 0;
   background: #000;
   color: #fff;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Remove default focus outlines (Portal‑OS style) */
+button,
+input {
+  outline: none;
+}
+
+/* Smooth buttons + inputs */
+button {
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+
+button:hover {
+  opacity: 0.85;
+}
+
+/* Range slider cleanup */
+input[type="range"] {
+  width: 100%;
+  appearance: none;
+  background: transparent;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  background: #fff;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 4px;
+  background: #333;
+  border-radius: 2px;
 }
