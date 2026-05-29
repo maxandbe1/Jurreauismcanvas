@@ -16,6 +16,7 @@ export default function UrlInput({ onUrlSelected }) {
         display: "flex",
         gap: "10px",
         width: "100%",
+        maxWidth: 480,
         marginBottom: "20px",
       }}
     >
